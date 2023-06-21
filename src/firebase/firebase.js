@@ -43,12 +43,47 @@ const storage = getStorage(app);
 
 
 export async function userExist(uid) {
-    try {
-        const docRef = doc(db, 'users', uid);
-        const res = await getDoc(docRef);
-        // console.log(res);
-        return res.exists();
-    } catch (err) {
-        console.error(err);
-    }
+  try {
+    const docRef = doc(db, 'users', uid);
+    const res = await getDoc(docRef);
+    // console.log(res);
+    return res.exists();
+  } catch (err) {
+    console.error(err);
+  }
+}
+
+export async function userNameExist(username) {
+  const users = [];
+  try {
+    const docsRef = collection(db, 'users')
+    const q = query(docsRef, where('displayName', '==', username));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      users.push(doc.data());
+    });
+
+    return users.length > 0 ? users[0].uid : null;
+  } catch (error) {
+    console.error(error);
+  }
+
+}
+
+export async function ConfirmEmail(email) {
+  const users = [];
+  try {
+    const docsRef = collection(db, 'users')
+    const q = query(docsRef, where('email_confirmed', '==', email));
+    const querySnapshot = await getDocs(q);
+
+    querySnapshot.forEach((doc) => {
+      users.push(doc.data());
+    });
+
+    return users.length > 0 ? users[0].uid : null;
+  } catch (error) {
+    console.error(error);
+  }
 }
