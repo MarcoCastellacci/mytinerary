@@ -87,3 +87,34 @@ export async function ConfirmEmail(email) {
     console.error(error);
   }
 }
+
+
+export async function RegsiterNewUser(user) {
+  try {
+    const collectionRef = collection(db, 'users')
+    const docRef = doc(collectionRef, user.uid)
+    await setDoc(docRef, user)
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function UpdateUser(user) {
+  try {
+    const collectionRef = collection(db, 'users')
+    const docRef = doc(collectionRef, user.uid)
+    await setDoc(docRef, user)
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getUserInfo(uid) {
+  try {
+    const docRef = doc(db, "users", uid)
+    const document = await getDoc(docRef)
+    return document.data();
+  } catch (error) {
+    console.error(error);
+  }
+}

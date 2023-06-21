@@ -1,14 +1,83 @@
-body {
+@import url('https://fonts.googleapis.com/css2?family=Joan&display=swap');
+
+/* Generales */
+
+* {
   margin: 0;
-  font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'Roboto', 'Oxygen',
-    'Ubuntu', 'Cantarell', 'Fira Sans', 'Droid Sans', 'Helvetica Neue',
-    sans-serif;
-  -webkit-font-smoothing: antialiased;
-  -moz-osx-font-smoothing: grayscale;
+  padding: 0;
+  box-sizing: border-box;
 }
 
-code {
-  font-family: source-code-pro, Menlo, Monaco, Consolas, 'Courier New',
-    monospace;
+#app {
+  height: 100%
 }
+
+html,
+body {
+  position: relative;
+  height: 100%
+}
+
+a {
+  text-decoration: none !important;
+}
+
+body {
+  background: #eee;
+  font-family: Helvetica Neue, Helvetica, Arial, sans-serif;
+  font-size: 14px;
+  color: #000;
+  margin: 0;
+  padding: 0;
+}
+
+.style {
+  padding: 0 !important;
+}
+
+/* Contenedores Generales */
+
+.main {
+  background-image: url("https://jetnews.com.mx/wp-content/uploads/2017/11/10-Common-Travel-Mistakes-You-Can-Avoid.jpg");
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-position: center;
+  width: 100%;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  flex-grow: 1;
+}
+
+.main-cities {
+  min-height: 100vh;
+}
+
+.call {
+  margin: 10rem;
+  margin-bottom: 5rem;
+  width: 90vw;
+
+}
+
+.gif-cities {
+  width: 50%;
+  height: 50vh;
+  margin-bottom: 10rem;
+}
+
+.title-cities {
+  font-family: 'Joan', serif;
+  font-size: 4rem;
+  font-weight: bold;
+  text-align: center;
+  margin-bottom: 2rem;
+}
+
+.title-app {
+  border-radius: 100px !important;
+  width: 95% !important;
+}
+
 

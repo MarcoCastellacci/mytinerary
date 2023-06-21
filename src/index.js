@@ -9,6 +9,8 @@ import Itinerary from './pages/itinerary.jsx';
 import LogIn from './pages/login.jsx';
 import Index from './pages/index.jsx';
 import NonPage from './pages/nonpage.jsx';
+import Footer from './componentes/footer.jsx';
+import NavBar from './componentes/navbar.jsx';
 
 import './style/index.css';
 
@@ -17,6 +19,7 @@ const root = ReactDOM.createRoot(document.getElementById('root'));
 const user = true;
 root.render(
   <BrowserRouter>
+    <NavBar />
     <Routes>
       <Route path="/user" element={<UserPage />} />
       <Route path="/cities" element={<Cities />} />
@@ -27,5 +30,6 @@ root.render(
       <Route path="/index" element={<Index />} />
       <Route path="*" element={<NonPage />} />
     </Routes>
+    <Footer />
   </BrowserRouter>
 );
