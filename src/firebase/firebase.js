@@ -4,6 +4,7 @@ import { getAuth } from 'firebase/auth';
 import {
   getFirestore,
   collection,
+  // eslint-disable-next-line
   addDoc,
   getDocs,
   doc,
@@ -11,12 +12,16 @@ import {
   query,
   where,
   setDoc,
+  // eslint-disable-next-line
   deleteDoc,
 } from 'firebase/firestore';
 import {
   getStorage,
+  // eslint-disable-next-line
   ref,
+  // eslint-disable-next-line
   uploadBytes,
+  // eslint-disable-next-line
   getDownloadURL,
   // eslint-disable-next-line
   getBytes
@@ -38,7 +43,7 @@ const firebaseConfig = {
 export const app = initializeApp(firebaseConfig);
 export const auth = getAuth(app);
 const db = getFirestore(app);
-
+// eslint-disable-next-line
 const storage = getStorage(app);
 
 
