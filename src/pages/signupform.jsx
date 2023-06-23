@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useState } from "react";
 import Button from '@mui/material/Button';
 import CssBaseline from '@mui/material/CssBaseline';
 import TextField from '@mui/material/TextField';
@@ -39,30 +39,52 @@ const theme = createTheme();
 export default function SignUp() {
 
     const navigate = useNavigate()
-    const [selectCountry, setSelectCountry] = React.useState();
+    const [selectCountry, setSelectCountry] = useState();
+    const [countries, setCountries] = useState();
+
+    useEffect(() => {
+        const fetchData = async () => {
+            try {
+                // Obtener el access token
+                const tokenResponse = await fetch('https://www.universal-tutorial.com/api/getaccesstoken', {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        'api-token': 'LM4ZzkmHkdbQ3d_IhbRkh5w5jO9BYhJ4HxrGcTqiLquS8wUoC5bpD_va1Kxc2JreilA',
+                        'user-email': 'marco.castellacci87@gmail.com',
+                    },
+                });
+                const { auth_token } = await tokenResponse.json();
+                // Utilizar el access token para hacer la solicitud a la API de países
+                const countriesResponse = await fetch('https://www.universal-tutorial.com/api/countries/', {
+                    method: 'GET',
+                    headers: {
+                        Accept: 'application/json',
+                        Authorization: `Bearer ${auth_token}`,
+                    },
+                });
+                const countriesData = await countriesResponse.json();
+                setCountries(countriesData)
+            } catch (error) {
+                // Aquí puedes manejar los errores
+                console.error(error);
+            }
+        };
+
+        fetchData();
+    }, []);
+
+    const countryNames = countries.map((country) => country.country_name);
+
+    const inputOptions = {};
+    countryNames.forEach((country) => {
+        inputOptions[country] = country;
+    });
 
     Swal.fire({
         title: 'Please Select your country',
         input: 'select',
-        inputOptions: {
-            'Argentina': 'Argentina',
-            'Australia': 'Australia',
-            'Brazil': 'Brazil',
-            'Chile': 'Chile',
-            'Colombia': 'Colombia',
-            'China': 'China',
-            'Mexico': 'Mexico',
-            'Germany': 'Germany',
-            'France': 'France',
-            'India': 'India',
-            'Italy': 'Italy',
-            'Japan': 'Japan',
-            'Korea': 'Korea',
-            'Quatar': 'Quatar',
-            'England': 'England',
-            'EEUU': 'EEUU',
-            'Spain': 'Spain',
-        },
+        inputOptions: inputOptions,
         inputPlaceholder: 'Select your country',
         inputAttributes: {
             name: 'select-country'
@@ -70,22 +92,22 @@ export default function SignUp() {
         showCancelButton: false,
         allowOutsideClick: false,
         preConfirm: (country) => {
-            setSelectCountry(country)
+            setSelectCountry(country);
         },
         inputValidator: (value) => {
             return new Promise((resolve) => {
                 if (value === '') {
-                    resolve('You need to select a country')
+                    resolve('You need to select a country');
                 } else {
-                    resolve()
+                    resolve();
                 }
-            })
+            });
         },
     }).then((result) => {
         if (result.value) {
-            Swal.close()
+            Swal.close();
         }
-    })
+    });
 
     function alerts(res) {
         const errormsg = res.data.message
