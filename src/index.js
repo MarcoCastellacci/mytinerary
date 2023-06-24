@@ -28,7 +28,7 @@ root.render(
       <Route path="/cities/city/:id" element={<Details />} />
       <Route path="/cities/city/:id" element={<Itinerary />} />
       {<Route path="/login" element={user ? <UserPage /> : <LogIn />} />}
-      {<Route path="/singup" element={user ? <UserPage /> : <SignUp />} />}
+      {<Route path="/signup" element={user ? <UserPage /> : <SignUp />} />}
       <Route path="/" element={<Index />} />
       <Route path="/index" element={<Index />} />
       <Route path="*" element={<NonPage />} />

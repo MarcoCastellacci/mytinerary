@@ -18,7 +18,7 @@ import '../style/footer.css';
 
 
 const pages = [{ to: '/index', name: 'Home' }, { to: '/cities', name: 'Cities' }, { to: '/user', name: 'Profile' }];
-const settings = [{ to: '/login', name: 'Sign In' }, { to: '/singup', name: 'Sign Up' }];
+const settings = [{ to: '/login', name: 'Sign In' }, { to: '/signup', name: 'Sign Up' }];
 
 const ResponsiveAppBar = () => {
 
