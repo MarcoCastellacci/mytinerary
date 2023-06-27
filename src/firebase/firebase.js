@@ -46,6 +46,9 @@ const db = getFirestore(app);
 // eslint-disable-next-line
 const storage = getStorage(app);
 
+export async function logout() {
+  await auth.signOut();
+}
 
 export async function userExist(uid) {
   try {
@@ -93,7 +96,6 @@ export async function ConfirmEmail(email) {
   }
 }
 
-
 export async function RegsiterNewUser(user) {
   try {
     const collectionRef = collection(db, 'users')
@@ -119,6 +121,72 @@ export async function getUserInfo(uid) {
     const docRef = doc(db, "users", uid)
     const document = await getDoc(docRef)
     return document.data();
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getCities() {
+  const cities = []
+  try {
+    const collectionRef = collection(db, "cities")
+    const querySnapshot = await getDocs(collectionRef)
+    querySnapshot.forEach(doc => {
+      const city = { ...doc.data() }
+      // console.log(doc);
+      city.docId = doc.id
+      cities.push(city)
+    })
+    return cities
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getCitiesById(docId) {
+  const cities = []
+  try {
+    const docRef = collection(db, "cities")
+    const q = query(docRef, where('_id', '==', docId))
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      cities.push(doc.data());
+    });
+
+    return cities.length > 0 ? cities[0] : null;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getItineraryByCities(docId) {
+  const itinerary = []
+  try {
+    const docRef = collection(db, "itineraries")
+    const q = query(docRef, where('city', '==', docId))
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      itinerary.push(doc.data());
+    });
+
+    return itinerary.length > 0 ? itinerary[0] : null;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getItineraries() {
+  const itineraries = []
+  try {
+    const collectionRef = collection(db, "itineraries")
+    const querySnapshot = await getDocs(collectionRef)
+    querySnapshot.forEach(doc => {
+      const itinerary = { ...doc.data() }
+      // console.log(doc);
+      itinerary.docId = doc.id
+      itineraries.push(itinerary)
+    })
+    return itineraries
   } catch (error) {
     console.error(error);
   }

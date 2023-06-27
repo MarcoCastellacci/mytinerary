@@ -1,0 +1,37 @@
+/* Pagina Detalles */
+
+.image-detail img {
+    height: 50vh !important;
+    object-fit: contain !important;
+    width: 80vw !important;
+}
+
+.description {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    width: 100%;
+    margin: 1rem;
+    background-color: rgba(0, 0, 0, 0.651);
+    color: antiquewhite;
+    text-align: center !important;
+}
+
+.description p {
+    width: 70% !important;
+    line-height: 1rem;
+}
+
+.city-name {
+    font-family: 'Joan', serif !important;
+    font-size: 4rem;
+    font-weight: bold;
+    text-align: center;
+    margin-bottom: 2rem;
+    text-shadow: 0px 0px 5px rgb(70, 39, 247);
+}
+
+.itinerary {
+    margin: 2rem !important;
+}

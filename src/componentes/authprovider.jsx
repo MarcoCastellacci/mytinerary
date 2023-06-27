@@ -1,7 +1,7 @@
 import { onAuthStateChanged } from "firebase/auth";
 import { useEffect } from "react";
 import { useNavigate } from "react-router-dom"
-import { auth, userExist } from "../firebase/firebase";
+import { auth, getUserInfo, userExist } from "../firebase/firebase";
 
 export default function Authprovider({ children, onUserLoggedIn, onUserNotLoggedIn, onUserNotRegister }) {
     const navigate = useNavigate();
@@ -11,11 +11,15 @@ export default function Authprovider({ children, onUserLoggedIn, onUserNotLogged
             if (user) {
                 const isRegister = await userExist(user.uid)
                 if (isRegister) {
-                    onUserLoggedIn(user)
-                    // console.log(user);
+                    const userInfo = await getUserInfo(user.uid)
+                    if (userInfo.emailVerified) {
+                        onUserLoggedIn(userInfo);
+                    } else {
+                        onUserNotRegister(userInfo);
+                    }
                 } else {
                     onUserNotRegister(user)
-                    // console.log(user);
+                    console.log(user);
                 }
             } else {
                 onUserNotLoggedIn();

@@ -13,15 +13,15 @@ export default function Index() {
 
     async function handleUserLoggedIn(user) {
         setUserState("user")
-        console.log(user);
+        // console.log(user);
     }
     async function handleUserNotRegister(user) {
         setUserState("notConfirmed")
-        console.log(user);
+        // console.log(user);
     }
     async function handleUserNotLoggedIn() {
         navigate('/login')
-        console.log(userState);
+        // console.log(userState);
     }
     if (userState === "notConfirmed" || userState === "user") {
         return (

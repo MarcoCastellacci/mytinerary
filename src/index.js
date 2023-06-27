@@ -6,7 +6,6 @@ import { Toaster } from 'react-hot-toast';
 import UserPage from './pages/userpage.jsx';
 import Cities from './pages/cities.jsx';
 import Details from './pages/details.jsx';
-import Itinerary from './pages/itinerary.jsx';
 import LogIn from './pages/login.jsx';
 import SignUp from './pages/signupform.jsx';
 import Index from './pages/index.jsx';
@@ -26,7 +25,6 @@ root.render(
       <Route path="/user" element={<UserPage />} />
       <Route path="/cities" element={<Cities />} />
       <Route path="/cities/city/:id" element={<Details />} />
-      <Route path="/cities/city/:id" element={<Itinerary />} />
       {<Route path="/login" element={user ? <UserPage /> : <LogIn />} />}
       {<Route path="/signup" element={user ? <UserPage /> : <SignUp />} />}
       <Route path="/" element={<Index />} />
