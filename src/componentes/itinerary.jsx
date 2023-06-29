@@ -12,7 +12,7 @@ import Typography from '@mui/material/Typography';
 import FavoriteIcon from '@mui/icons-material/Favorite';
 import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import { useState } from 'react';
-// import Activities from '../components/Activities';
+import Activities from '../componentes/activities';
 // import toast from 'react-hot-toast';
 
 // import '../styles/commentStyle.css'
@@ -100,6 +100,7 @@ export default function Itinerarys(props) {
         setUserState(true)
     }, [props]);
     console.log(props);
+
     // function alerts(res) {
     //     if (res === undefined) {
     //         toast.error("You must be logged in to comment or like an itinerary");
@@ -195,11 +196,9 @@ export default function Itinerarys(props) {
             </Collapse>
             <Collapse in={activities} timeout="auto" unmountOnExit>
                 <CardContent>
-                    {/* <Typography paragraph>
-                        {props.itinerarys?.activities.map((activity, index) =>
-                            <Activities activities={activity} key={index} />
-                        )}
-                    </Typography> */}
+                    <Typography>
+                        <Activities activities={props.itinerarys._id} />
+                    </Typography>
                 </CardContent>
                 <CardContent>
                     <CardActions>

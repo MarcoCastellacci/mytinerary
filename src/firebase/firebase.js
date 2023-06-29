@@ -191,3 +191,36 @@ export async function getItineraries() {
     console.error(error);
   }
 }
+
+export async function getActivitiesByItinerary(docId) {
+  const activity = []
+  try {
+    const docRef = collection(db, "activities")
+    const q = query(docRef, where('itinerary', '==', docId))
+    const querySnapshot = await getDocs(q)
+    querySnapshot.forEach((doc) => {
+      activity.push(doc.data());
+    });
+
+    return activity.length > 0 ? activity : null;
+  } catch (error) {
+    console.error(error);
+  }
+}
+
+export async function getActivities() {
+  const activities = []
+  try {
+    const collectionRef = collection(db, "activities")
+    const querySnapshot = await getDocs(collectionRef)
+    querySnapshot.forEach(doc => {
+      const activity = { ...doc.data() }
+      // console.log(doc);
+      activity.docId = doc.id
+      activities.push(activity)
+    })
+    return activities
+  } catch (error) {
+    console.error(error);
+  }
+}

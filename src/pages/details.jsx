@@ -19,6 +19,7 @@ export default function Details() {
         }
         getData()
     }, [id])
+
     useEffect(() => {
         async function getData() {
             const resItineraries = await getItineraryByCities(id)
