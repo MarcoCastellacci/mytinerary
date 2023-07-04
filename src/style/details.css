@@ -35,3 +35,25 @@
 .itinerary {
     margin: 2rem !important;
 }
+
+.button-back {
+    margin: 1.5rem;
+    --font-color: #1e0252;
+    --bg-color: #85c8ee;
+    --main-color: #020a50;
+    width: 100%;
+    height: 40px;
+    border-radius: 5px;
+    border: 2px solid var(--main-color);
+    background-color: var(--bg-color);
+    box-shadow: 4px 4px var(--main-color);
+    font-size: 17px;
+    font-weight: 600;
+    color: var(--font-color);
+    cursor: pointer;
+}
+
+.button-back:active {
+    box-shadow: 0px 0px var(--main-color);
+    transform: translate(3px, 3px);
+}

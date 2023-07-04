@@ -71,7 +71,6 @@ export async function userNameExist(username) {
     querySnapshot.forEach((doc) => {
       users.push(doc.data());
     });
-
     return users.length > 0 ? users[0].uid : null;
   } catch (error) {
     console.error(error);
@@ -79,11 +78,11 @@ export async function userNameExist(username) {
 
 }
 
-export async function ConfirmEmail(email) {
+export async function ConfirmEmail() {
   const users = [];
   try {
     const docsRef = collection(db, 'users')
-    const q = query(docsRef, where('email_confirmed', '==', email));
+    const q = query(docsRef, where('emailVerified', '==', true));
     const querySnapshot = await getDocs(q);
 
     querySnapshot.forEach((doc) => {
@@ -120,6 +119,7 @@ export async function getUserInfo(uid) {
   try {
     const docRef = doc(db, "users", uid)
     const document = await getDoc(docRef)
+    console.log(document);
     return document.data();
   } catch (error) {
     console.error(error);

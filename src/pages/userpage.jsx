@@ -39,10 +39,12 @@ export default function UserProfile() {
     };
     async function handleUserLoggedIn(user) {
         setUser(user)
+        console.log(user);
         setUserState("user")
     }
     async function handleUserNotRegister(user) {
         setUser(user)
+        console.log(user);
         setUserState('notConfirmed')
     }
     async function handleUserNotLoggedIn() {

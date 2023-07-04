@@ -54,10 +54,11 @@ export default function Details() {
                             </div>
                         }
                     </div>
-                    <div className='button'>
+                    <div>
                         <RouterLink to={'/cities'}>
-                            <span className='button-content'> Back to Cities
-                            </span>
+                            <button className='button-back'>
+                                &#10232; Back to Cities
+                            </button>
                         </RouterLink>
                     </div>
 

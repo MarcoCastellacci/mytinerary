@@ -19,7 +19,7 @@ export default function Authprovider({ children, onUserLoggedIn, onUserNotLogged
                     }
                 } else {
                     onUserNotRegister(user)
-                    console.log(user);
+                    // console.log(user);
                 }
             } else {
                 onUserNotLoggedIn();
