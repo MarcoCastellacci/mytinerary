@@ -22,6 +22,7 @@ import { useNavigate } from 'react-router-dom';
 
 import '../style/login.css';
 import Authprovider from "../componentes/authprovider";
+import Loadding from "../componentes/loadder";
 
 
 function Copyright(props) {
@@ -320,5 +321,6 @@ export default function SignUp() {
     return <Authprovider onUserLoggedIn={handleUserLoggedIn}
         onUserNotRegister={handleUserNotRegister}
         onUserNotLoggedIn={handleUserNotLoggedIn}>
+        <Loadding />
     </Authprovider>
 }

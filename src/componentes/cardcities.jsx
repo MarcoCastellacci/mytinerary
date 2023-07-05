@@ -80,9 +80,12 @@ function CardCities() {
                             />
                         </RouterLink>
                     </ImageListItem>) :
-                    <Typography variant="h1" color="white" sx={{ textAlign: 'center', width: '85vw', backgroundColor: 'rgba(0, 0, 0, 0.651)' }} >
-                        No cities found
-                    </Typography>}
+                    <div className='main-cities'>
+                        <Typography variant="h1" color="white" sx={{ textAlign: 'center', width: '85vw', backgroundColor: 'rgba(0, 0, 0, 0.651)' }} >
+                            No cities found
+                        </Typography>
+                    </div>
+                }
             </ImageList>
         </>
     )

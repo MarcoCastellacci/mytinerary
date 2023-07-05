@@ -76,6 +76,7 @@ body {
 }
 
 .title-app {
+  margin-top: 1.5rem;
   border-radius: 100px !important;
   width: 95% !important;
 }
@@ -150,4 +151,8 @@ body {
 
 .image-list-item img {
   height: 50vh !important;
+}
+
+.main-cities {
+  min-height: 100vh;
 }

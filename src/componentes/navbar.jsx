@@ -15,9 +15,8 @@ import { Link as RouterLink } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 
 import '../style/footer.css';
-import { getUserInfo } from '../firebase/firebase';
+import { getUserInfo, logout } from '../firebase/firebase';
 import Authprovider from './authprovider';
-
 
 const pages = [{ to: '/index', name: 'Home' }, { to: '/cities', name: 'Cities' }, { to: '/user', name: 'Profile' }];
 const settings = [{ to: '/login', name: 'Sign In' }, { to: '/signup', name: 'Sign Up' }];
@@ -44,6 +43,10 @@ const ResponsiveAppBar = () => {
         setAnchorElUser(null);
     };
 
+    async function handleLogOut() {
+        await logout()
+    }
+
     async function handleUserLoggedIn(user) {
         setUser(user)
         console.log(user);
@@ -64,12 +67,14 @@ const ResponsiveAppBar = () => {
         const currentUser = getUserInfo(user.uid)
         console.log(currentUser);
     }, [user])
+
+
     if (userState === "user" || userState === "notConfirmed") {
         return (
             <AppBar position="static" sx={{
                 backgroundImage: "linear-gradient(to top, #00c6fb 0%, #005bea 100%)",
             }}>
-                <Container maxWidth="xl">
+                <Container>
                     <Toolbar disableGutters>
                         <Box
                             sx={{
@@ -157,7 +162,7 @@ const ResponsiveAppBar = () => {
                                 <IconButton onClick={handleOpenUserMenu} sx={{ p: 0, }}>
                                     {user ? <Avatar
                                         alt="User Image"
-                                        src={user.photoURL}
+                                        src={user.profilePicture}
                                         sx={{ width: 56, height: 56 }}
                                     /> : <AccountCircleIcon sx={{
                                         width: '4rem',
@@ -183,7 +188,11 @@ const ResponsiveAppBar = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {user ? <Typography >Sign Out</Typography> :
+                                {user ? <RouterLink onClick={handleLogOut}><MenuItem sx={{ textDecoration: 'none', }}>
+                                    <Typography sx={{
+                                        color: 'black'
+                                    }} textAlign="center">Sign Out</Typography>
+                                </MenuItem></RouterLink> :
                                     settings.map((setting, index) => (
                                         <RouterLink key={index} to={setting.to} onClick={handleCloseUserMenu}>
                                             <MenuItem sx={{ textDecoration: 'none', }}>

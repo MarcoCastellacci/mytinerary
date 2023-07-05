@@ -5,6 +5,8 @@ import CallToAction from '../componentes/banner';
 import '../style/index.css';
 import Authprovider from '../componentes/authprovider';
 import { useNavigate } from 'react-router-dom';
+import Loadding from '../componentes/loadder';
+import Carrousel from '../componentes/carrousel';
 // import axios from 'axios';
 
 export default function Index() {
@@ -30,9 +32,9 @@ export default function Index() {
                     <div className="call">
                         <CallToAction />
                     </div>
-                    {/* <div className="carrousel">
-        <Carrousel />
-    </div> */}
+                    <div className="carrousel">
+                        <Carrousel />
+                    </div>
                 </div>
 
             </>
@@ -42,6 +44,6 @@ export default function Index() {
     return <Authprovider onUserLoggedIn={handleUserLoggedIn}
         onUserNotRegister={handleUserNotRegister}
         onUserNotLoggedIn={handleUserNotLoggedIn}>
-        <div>Loadding... </div>
+        <Loadding />
     </Authprovider>
 }

@@ -13,8 +13,7 @@ import ExpandMoreIcon from '@mui/icons-material/ExpandMore';
 import Authprovider from '../componentes/authprovider';
 import { useNavigate } from 'react-router-dom';
 
-
-
+import '../style/userpage.css'
 
 const ExpandMore = styled((props) => {
     const { expand, ...other } = props;
@@ -39,12 +38,12 @@ export default function UserProfile() {
     };
     async function handleUserLoggedIn(user) {
         setUser(user)
-        console.log(user);
+        // console.log(user);
         setUserState("user")
     }
     async function handleUserNotRegister(user) {
         setUser(user)
-        console.log(user);
+        // console.log(user);
         setUserState('notConfirmed')
     }
     async function handleUserNotLoggedIn() {
@@ -54,9 +53,9 @@ export default function UserProfile() {
     if (userState === "user" || userState === "notConfirmed") {
         return (
             <>
-                <div className="main">
+                <div className="main userpage">
                     {user ?
-                        <Card sx={{ width: '70vw', bgcolor: 'rgba(0, 0, 0, 0.651)', marginY: '5rem', height: { xl: '30vw' }, }}>
+                        <Card sx={{ width: '70vw', bgcolor: 'rgba(0, 0, 0, 0.651)', marginY: '5rem' }}>
                             <CardHeader sx={{ color: 'whiteSmoke' }}
                                 avatar={
                                     <Avatar sx={{ bgcolor: 'black', }} aria-label="recipe">
@@ -67,13 +66,13 @@ export default function UserProfile() {
                             />
                             <CardMedia
                                 component="img"
-                                width='20%'
-                                image={user.photoURL}
+                                sx={{ width: '20%' }}
+                                image={user.profilePicture}
                                 alt="User Profile Picture"
                             />
                             <CardContent>
                                 <Typography variant="body2" color="white">
-                                    This is my profil info.
+                                    Welcome {user.displayName}
                                 </Typography>
                             </CardContent>
                             <CardActions disableSpacing>
