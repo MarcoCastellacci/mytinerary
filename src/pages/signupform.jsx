@@ -180,13 +180,15 @@ export default function SignUp() {
         navigate('/user')
     }
     async function handleUserNotRegister(user) {
-        setUserState("notConfirmed")
+        console.log(user);
+        // if(user)
+        setUserState('/login')
     }
     async function handleUserNotLoggedIn() {
         setUserState("notUser")
     }
 
-    if (userState === "notUser" || userState === "notConfirmed") {
+    if (userState === "notUser") {
         return (
             <ThemeProvider theme={theme}>
                 <Grid container component="main" >

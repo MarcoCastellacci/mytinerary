@@ -1,7 +1,11 @@
 /* Navbar y Footer */
 .logo {
     width: 30%;
-    height: auto;
+    height: 100% !important;
+}
+
+.main-login {
+    height: 100% !important;
 }
 
 .logo-footer {
@@ -16,6 +20,7 @@
 }
 
 .logos {
+    height: 100%;
     width: 3rem;
     justify-content: center;
     align-items: center;

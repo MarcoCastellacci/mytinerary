@@ -42,66 +42,91 @@ export default function UserProfile() {
         setUserState("user")
     }
     async function handleUserNotRegister(user) {
-        setUser(user)
-        // console.log(user);
         setUserState('notConfirmed')
     }
     async function handleUserNotLoggedIn() {
         navigate('/login')
     }
 
-    if (userState === "user" || userState === "notConfirmed") {
+    if (userState === "user") {
         return (
             <>
                 <div className="main userpage">
-                    {user ?
-                        <Card sx={{ width: '70vw', bgcolor: 'rgba(0, 0, 0, 0.651)', marginY: '5rem' }}>
-                            <CardHeader sx={{ color: 'whiteSmoke' }}
-                                avatar={
-                                    <Avatar sx={{ bgcolor: 'black', }} aria-label="recipe">
-                                        {user.displayName.charAt(0)}
-                                    </Avatar>
-                                }
-                                title={user.displayName}
-                            />
-                            <CardMedia
-                                component="img"
-                                sx={{ width: '20%' }}
-                                image={user.profilePicture}
-                                alt="User Profile Picture"
-                            />
+                    <Card sx={{ width: '70vw', bgcolor: 'rgba(0, 0, 0, 0.651)', marginY: '5rem' }}>
+                        <CardHeader sx={{ color: 'whiteSmoke' }}
+                            avatar={
+                                <Avatar sx={{ bgcolor: 'black', }} aria-label="recipe">
+                                    {user.displayName.charAt(0)}
+                                </Avatar>
+                            }
+                            title={user.displayName}
+                        />
+                        <CardMedia
+                            component="img"
+                            sx={{ width: '20%' }}
+                            image={user.profilePicture}
+                            alt="User Profile Picture"
+                        />
+                        <CardContent>
+                            <Typography variant="body2" color="white">
+                                Welcome {user.displayName}
+                            </Typography>
+                        </CardContent>
+                        <CardActions disableSpacing>
+                            <ExpandMore
+                                color="primary"
+                                expand={expanded}
+                                onClick={handleExpandClick}
+                                aria-expanded={expanded}
+                                aria-label="show more"
+                            >
+                                <ExpandMoreIcon />
+                            </ExpandMore>
+                        </CardActions>
+                        <Collapse in={expanded} timeout="auto" unmountOnExit>
+                            <Typography variant='h6' sx={{ color: 'whitesmoke' }}>My Likes</Typography>
                             <CardContent>
-                                <Typography variant="body2" color="white">
-                                    Welcome {user.displayName}
+                                <Typography paragraph sx={{ color: 'whitesmoke' }}>
+                                    Here is gonna appear my likes collections.
                                 </Typography>
                             </CardContent>
-                            <CardActions disableSpacing>
-                                <ExpandMore
-                                    color="primary"
-                                    expand={expanded}
-                                    onClick={handleExpandClick}
-                                    aria-expanded={expanded}
-                                    aria-label="show more"
-                                >
-                                    <ExpandMoreIcon />
-                                </ExpandMore>
-                            </CardActions>
-                            <Collapse in={expanded} timeout="auto" unmountOnExit>
-                                <Typography variant='h6' sx={{ color: 'whitesmoke' }}>My Likes</Typography>
-                                <CardContent>
-                                    <Typography paragraph sx={{ color: 'whitesmoke' }}>
-                                        Here is gonna appear my likes collections.
-                                    </Typography>
-                                </CardContent>
-                            </Collapse>
-                        </Card>
-                        :
+                        </Collapse>
+                    </Card>
+                </div>
+            </>
+        );
+    }
+
+    if (userState === "notConfirmed") {
+        return (
+            <>
+                <div className="main userpage">
+                    <Card sx={{ width: '70vw', bgcolor: 'rgba(0, 0, 0, 0.651)', marginY: '5rem' }}>
+                        <CardHeader sx={{ color: 'whiteSmoke' }}
+                            avatar={
+                                <Avatar sx={{ bgcolor: 'black', }} aria-label="recipe">
+                                    {user.displayName.charAt(0)}
+                                </Avatar>
+                            }
+                            title={user.displayName}
+                        />
+                        <CardMedia
+                            component="img"
+                            sx={{ width: '20%' }}
+                            image={user.profilePicture}
+                            alt="User Profile Picture"
+                        />
+                        <CardContent>
+                            <Typography variant="body2" color="white">
+                                Welcome {user.displayName}
+                            </Typography>
+                        </CardContent>
                         <CardContent sx={{ height: '100vh' }}>
                             <Typography variant='h3' sx={{ color: 'whitesmoke', bgcolor: 'rgba(0, 0, 0, 0.651)', width: '80vw', textAlign: 'center', borderRadius: '20px', marginTop: '5rem' }}>
                                 You need to sign in to see your profile.
                             </Typography>
                         </CardContent>
-                    }
+                    </Card>
                 </div>
             </>
         );

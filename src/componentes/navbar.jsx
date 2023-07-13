@@ -15,6 +15,7 @@ import { Link as RouterLink } from "react-router-dom";
 import Avatar from '@mui/material/Avatar';
 
 import '../style/footer.css';
+
 import { getUserInfo, logout } from '../firebase/firebase';
 import Authprovider from './authprovider';
 
@@ -26,6 +27,7 @@ const ResponsiveAppBar = () => {
     const [anchorElNav, setAnchorElNav] = useState(null);
     const [anchorElUser, setAnchorElUser] = useState(null);
     const [user, setUser] = useState([])
+    const [userLog, setUSerLog] = useState(false)
     const [userState, setUserState] = useState("")
 
     const handleOpenNavMenu = (event) => {
@@ -45,16 +47,17 @@ const ResponsiveAppBar = () => {
 
     async function handleLogOut() {
         await logout()
+        window.location.reload(true)
     }
 
     async function handleUserLoggedIn(user) {
         setUser(user)
-        console.log(user);
+        setUSerLog(true)
         setUserState("user")
     }
     async function handleUserNotRegister(user) {
         setUser(user)
-        console.log(user);
+        setUSerLog(true)
         setUserState('notConfirmed')
     }
     async function handleUserNotLoggedIn() {
@@ -68,13 +71,13 @@ const ResponsiveAppBar = () => {
         console.log(currentUser);
     }, [user])
 
-
-    if (userState === "user" || userState === "notConfirmed") {
+    console.log(userLog);
+    if (userState === "user" || userState === "notConfirmed" || userState === "notUser") {
         return (
             <AppBar position="static" sx={{
-                backgroundImage: "linear-gradient(to top, #00c6fb 0%, #005bea 100%)",
+                backgroundImage: "linear-gradient(to top, #00c6fb 0%, #005bea 100%)"
             }}>
-                <Container>
+                <Container className='main-login'>
                     <Toolbar disableGutters>
                         <Box
                             sx={{
@@ -86,12 +89,11 @@ const ResponsiveAppBar = () => {
                                 color: 'inherit',
                                 textDecoration: 'none',
                                 width: '100%',
-                                marginRight: '0',
+                                marginRight: '0'
                             }}
                         >
                             <img src={Logo} alt="Logo" className="logo" />
                         </Box>
-
                         <Box sx={{ flexGrow: 1, display: { xs: 'flex', md: 'none' } }}>
                             <IconButton
                                 size="large"
@@ -188,11 +190,13 @@ const ResponsiveAppBar = () => {
                                 open={Boolean(anchorElUser)}
                                 onClose={handleCloseUserMenu}
                             >
-                                {user ? <RouterLink onClick={handleLogOut}><MenuItem sx={{ textDecoration: 'none', }}>
-                                    <Typography sx={{
-                                        color: 'black'
-                                    }} textAlign="center">Sign Out</Typography>
-                                </MenuItem></RouterLink> :
+                                {userLog ?
+                                    <RouterLink onClick={handleLogOut}><MenuItem sx={{ textDecoration: 'none', }}>
+                                        <Typography sx={{
+                                            color: 'black'
+                                        }} textAlign="center">Sign Out</Typography>
+                                    </MenuItem></RouterLink>
+                                    :
                                     settings.map((setting, index) => (
                                         <RouterLink key={index} to={setting.to} onClick={handleCloseUserMenu}>
                                             <MenuItem sx={{ textDecoration: 'none', }}>
@@ -201,7 +205,6 @@ const ResponsiveAppBar = () => {
                                                 }} textAlign="center">{setting.name}</Typography>
                                             </MenuItem>
                                         </RouterLink>))
-
                                 }
                             </Menu>
                         </Box>

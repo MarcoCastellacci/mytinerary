@@ -47,7 +47,7 @@ const db = getFirestore(app);
 const storage = getStorage(app);
 
 export async function logout() {
-  await auth.signOut();
+    await auth.signOut();
 }
 
 export async function userExist(uid) {
