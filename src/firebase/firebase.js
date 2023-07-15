@@ -97,6 +97,7 @@ export async function ConfirmEmail() {
 
 export async function RegsiterNewUser(user) {
   try {
+    console.log(user);
     const collectionRef = collection(db, 'users')
     const docRef = doc(collectionRef, user.uid)
     await setDoc(docRef, user)

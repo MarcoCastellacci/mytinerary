@@ -13,6 +13,7 @@ import {
     GoogleAuthProvider,
     FacebookAuthProvider,
     signInWithPopup,
+    createUserWithEmailAndPassword,
 } from "firebase/auth";
 import { auth } from "../firebase/firebase";
 
@@ -148,7 +149,6 @@ export default function SignUp() {
 
     async function handleFacebookSubmit() {
         const facebookProvider = new FacebookAuthProvider();
-        facebookProvider.getCustomParameters()
         await SignInWithFacebook(facebookProvider);
         async function SignInWithFacebook(facebookProvider) {
             try {
@@ -173,16 +173,27 @@ export default function SignUp() {
             country: selectCountry,
             from: 'form-signup'
         }
-        // console.log(userData);
+        try {
+            console.log(userData);
+            const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password)
+            console.log(userCredential);
+        } catch (error) {
+            if (error.code === 'auth/email-already-in-use') {
+                toast.error("Email existente")
+            }
+            if (error.code === 'auth/invalid-email') {
+                toast.error("Email Invalido. Prueba con otro porfavor")
+            }
+            if (error.code === 'auth/weak-password') {
+                toast.error("Password devil. Debe tener minimo 8 caracteres")
+            } else if (error.code) {
+                toast.error('Ocurrio un error inesperado Porfavor intentalo mas Tarde')
+            }
+        }
     };
 
     async function handleUserLoggedIn(user) {
         navigate('/user')
-    }
-    async function handleUserNotRegister(user) {
-        console.log(user);
-        // if(user)
-        setUserState('/login')
     }
     async function handleUserNotLoggedIn() {
         setUserState("notUser")
@@ -321,7 +332,6 @@ export default function SignUp() {
     }
 
     return <Authprovider onUserLoggedIn={handleUserLoggedIn}
-        onUserNotRegister={handleUserNotRegister}
         onUserNotLoggedIn={handleUserNotLoggedIn}>
         <Loadding />
     </Authprovider>

@@ -41,13 +41,10 @@ export default function UserProfile() {
         // console.log(user);
         setUserState("user")
     }
-    async function handleUserNotRegister(user) {
-        setUserState('notConfirmed')
-    }
     async function handleUserNotLoggedIn() {
         navigate('/login')
     }
-
+    console.log(user);
     if (userState === "user") {
         return (
             <>
@@ -132,7 +129,6 @@ export default function UserProfile() {
         );
     }
     return <Authprovider onUserLoggedIn={handleUserLoggedIn}
-        onUserNotRegister={handleUserNotRegister}
         onUserNotLoggedIn={handleUserNotLoggedIn}>
     </Authprovider>
 }

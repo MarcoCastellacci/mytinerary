@@ -15,6 +15,7 @@ import {
     GoogleAuthProvider,
     FacebookAuthProvider,
     signInWithPopup,
+    signInWithEmailAndPassword,
 } from "firebase/auth";
 
 import { auth } from "../firebase/firebase";
@@ -73,7 +74,7 @@ export default function LogIn() {
         async function SingInWithGoogle(googleProvider) {
             try {
                 const res = await signInWithPopup(auth, googleProvider);
-                alerts(res)
+                console.log(res)
             } catch (error) {
                 console.error(error);
             }
@@ -82,7 +83,6 @@ export default function LogIn() {
 
     async function handleFacebookSubmit() {
         const facebookProvider = new FacebookAuthProvider();
-        facebookProvider.setCustomParameters({ 'display': 'popup' })
         await SignInWithFacebook(facebookProvider);
         async function SignInWithFacebook(facebookProvider) {
             try {
@@ -97,14 +97,33 @@ export default function LogIn() {
     async function handleUserLoggedIn(user) {
         navigate('/user')
     }
-    async function handleUserNotRegister(user) {
-        navigate('notRegister')
-        console.log(user);
-    }
+
     async function handleUserNotLoggedIn() {
         setUserState("notUser")
     }
 
+    async function handleSubmit(event) {
+        event.preventDefault();
+        // eslint-disable-next-line
+        const userData = {
+            email: event.target[6].value,
+            password: event.target[8].value,
+        }
+        try {
+            console.log(userData);
+            const userCredential = await signInWithEmailAndPassword(auth, userData.email, userData.password)
+            console.log(userCredential);
+        } catch (error) {
+            if (error.code === 'auth/user-not-found') {
+                toast.error("Password o email incorrecto")
+            }
+            if (error.code === 'auth/wrong-password') {
+                toast.error("Password o email incorrecto")
+            } else if (error.code) {
+                toast.error('Ocurrio un error inesperado Porfavor intentalo mas Tarde')
+            }
+        }
+    };
 
     if (userState === "notUser" || userState === "notRegister") {
         return (
@@ -140,7 +159,7 @@ export default function LogIn() {
                                 <Typography component="h1" variant="h5">
                                     Sign in
                                 </Typography>
-                                <Box component="form" noValidate sx={{ mt: 1, height:'70vh' }}>
+                                <Box component="form" noValidate onSubmit={handleSubmit} sx={{ mt: 1, height: '70vh' }}>
                                     <TextField
                                         margin="normal"
                                         required
@@ -210,7 +229,6 @@ export default function LogIn() {
     }
 
     return <Authprovider onUserLoggedIn={handleUserLoggedIn}
-        onUserNotRegister={handleUserNotRegister}
         onUserNotLoggedIn={handleUserNotLoggedIn}>
     </Authprovider>
 }

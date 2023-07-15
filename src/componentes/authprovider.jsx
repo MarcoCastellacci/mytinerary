@@ -3,7 +3,7 @@ import { useEffect } from "react";
 import { useNavigate } from "react-router-dom"
 import { RegsiterNewUser, auth, getUserInfo, userExist } from "../firebase/firebase";
 
-export default function Authprovider({ children, onUserLoggedIn, onUserNotLoggedIn, onUserNotRegister }) {
+export default function Authprovider({ children, onUserLoggedIn, onUserNotLoggedIn }) {
     const navigate = useNavigate();
 
     useEffect(() => {
@@ -13,12 +13,9 @@ export default function Authprovider({ children, onUserLoggedIn, onUserNotLogged
                 if (isRegister) {
                     const userInfo = await getUserInfo(user.uid)
                     // console.log(userInfo);
-                    if (userInfo) {
-                        onUserLoggedIn(userInfo);
-                    } else {
-                        onUserNotRegister(userInfo);
-                    }
+                    onUserLoggedIn(userInfo);
                 } else {
+                    console.log(user);
                     await RegsiterNewUser({
                         uid: user.uid,
                         displayName: user.displayName,
@@ -26,15 +23,15 @@ export default function Authprovider({ children, onUserLoggedIn, onUserNotLogged
                         profilePicture: user.photoURL,
                         emailVerified: true,
                     })
-                    onUserNotRegister(user)
-                    // console.log(user);
+                    console.log(user);
+                    onUserLoggedIn(user)
                 }
             } else {
                 onUserNotLoggedIn();
                 console.log("No hay Usuarios Conectados...");
             }
         })
-    }, [onUserLoggedIn, onUserNotRegister, onUserNotLoggedIn, navigate])
+    }, [onUserLoggedIn, onUserNotLoggedIn, navigate])
 
     return (
         <>

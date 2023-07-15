@@ -1,5 +1,7 @@
 import React from "react";
 
+import '../style/nonpage.css'
+
 
 function NonPage (){
 return (
