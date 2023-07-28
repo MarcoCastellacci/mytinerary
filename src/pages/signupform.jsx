@@ -45,6 +45,12 @@ export default function SignUp() {
     const [selectCountry, setSelectCountry] = useState();
     const [countries, setCountries] = useState([]);
     const [userState, setUserState] = useState("")
+    const [userData, setUserData] = useState({})
+    const [name, setName] = useState("")
+    const [lastName, setLastName] = useState("")
+    const [email, setEmail] = useState("")
+    const [password, setPassword] = useState("")
+    const [image, setImage] = useState("")
 
 
     useEffect(() => {
@@ -86,61 +92,61 @@ export default function SignUp() {
     countryNames.forEach((country) => {
         inputOptions[country] = country;
     });
-
-    Swal.fire({
-        title: 'Please Select your country',
-        input: 'select',
-        inputOptions: inputOptions,
-        inputPlaceholder: 'Select your country',
-        inputAttributes: {
-            name: 'select-country'
-        },
-        showCancelButton: false,
-        allowOutsideClick: false,
-        preConfirm: (country) => {
-            setSelectCountry(country);
-        },
-        inputValidator: (value) => {
-            return new Promise((resolve) => {
-                if (value === '') {
-                    resolve('You need to select a country');
-                } else {
-                    resolve();
-                }
-            });
-        },
-    }).then((result) => {
-        if (result.value) {
-            Swal.close();
-        }
-    });
-
-    function alerts(res) {
-        if (res.providerId === "google.com") {
-            if (res.user.emailVerified) {
-                toast.success(res.user.emailVerified)
-            } else {
-                toast.error(res.user.emailVerified)
+    if (!selectCountry) {
+        Swal.fire({
+            title: 'Please Select your country',
+            input: 'select',
+            inputOptions: inputOptions,
+            inputPlaceholder: 'Select your country',
+            inputAttributes: {
+                name: 'select-country'
+            },
+            showCancelButton: false,
+            allowOutsideClick: false,
+            preConfirm: (country) => {
+                setSelectCountry(country);
+            },
+            inputValidator: (value) => {
+                return new Promise((resolve) => {
+                    if (value === '') {
+                        resolve('You need to select a country');
+                    } else {
+                        resolve();
+                    }
+                });
+            },
+        }).then((result) => {
+            if (result.value) {
+                Swal.close();
             }
-        }
-        if (res.providerId === "signup") {
-            if (res.user.emailVerified) {
-                toast.success(res.user.emailVerified)
-            } else {
-                toast.error(res.user.emailVerified)
-            }
-        }
+        });
     }
+
+    // function alerts(res) {
+    //     if (res.providerId === "google.com") {
+    //         if (res.user.emailVerified) {
+    //             toast.success(res.user.emailVerified)
+    //         } else {
+    //             toast.error(res.user.emailVerified)
+    //         }
+    //     }
+    //     if (res.providerId === "signup") {
+    //         if (res.user.emailVerified) {
+    //             toast.success(res.user.emailVerified)
+    //         } else {
+    //             toast.error(res.user.emailVerified)
+    //         }
+    //     }
+    // }
 
     async function handleGoogleSubmit() {
         const googleProvider = new GoogleAuthProvider();
-        googleProvider.setCustomParameters({ prompt: "select_account" });
         await SingInWithGoogle(googleProvider);
         async function SingInWithGoogle(googleProvider) {
             try {
                 const res = await signInWithPopup(auth, googleProvider);
                 console.log(res);
-                alerts(res)
+                // alerts(res)
             } catch (error) {
                 console.error(error);
             }
@@ -154,27 +160,43 @@ export default function SignUp() {
             try {
                 const res = await signInWithPopup(auth, facebookProvider)
                 console.log(res);
-                alerts(res)
+                // alerts(res)
             } catch (error) {
                 console.error(error);
             }
         }
     }
 
-    async function handleSubmit(event) {
-        event.preventDefault();
-        // eslint-disable-next-line
-        const userData = {
-            name: event.target[0].value,
-            lastName: event.target[2].value,
-            image: event.target[4].value,
-            email: event.target[6].value,
-            password: event.target[8].value,
-            country: selectCountry,
-            from: 'form-signup'
+    function handleUserData(e) {
+        if (e.target.id === "name") {
+            setName(e.target.value)
         }
+        if (e.target.id === "lastName") {
+            setLastName(e.target.value)
+        }
+        if (e.target.id === "email") {
+            setEmail(e.target.value)
+        }
+        if (e.target.id === "image") {
+            setImage(e.target.value)
+        }
+        if (e.target.id === "password") {
+            setPassword(e.target.value)
+        }
+        const userData = {
+            name: name,
+            lastName: lastName,
+            displayName: name + " " + lastName,
+            image: image,
+            email: email,
+            password: password,
+            country: selectCountry,
+        }
+        setUserData(userData)
+    }
+    // console.log(userData);
+    async function handleSubmit(event) {
         try {
-            console.log(userData);
             const userCredential = await createUserWithEmailAndPassword(auth, userData.email, userData.password)
             console.log(userCredential);
         } catch (error) {
@@ -237,6 +259,7 @@ export default function SignUp() {
                                 <Grid container spacing={2}>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            onChange={handleUserData}
                                             autoComplete="given-name"
                                             name="name"
                                             required
@@ -249,6 +272,7 @@ export default function SignUp() {
                                     </Grid>
                                     <Grid item xs={12} sm={6}>
                                         <TextField
+                                            onChange={handleUserData}
                                             required
                                             fullWidth
                                             id="lastName"
@@ -260,6 +284,7 @@ export default function SignUp() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
+                                            onChange={handleUserData}
                                             required
                                             fullWidth
                                             id="image"
@@ -271,6 +296,7 @@ export default function SignUp() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
+                                            onChange={handleUserData}
                                             required
                                             fullWidth
                                             id="email"
@@ -282,6 +308,7 @@ export default function SignUp() {
                                     </Grid>
                                     <Grid item xs={12}>
                                         <TextField
+                                            onChange={handleUserData}
                                             required
                                             fullWidth
                                             name="password"

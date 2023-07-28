@@ -66,9 +66,12 @@ const ResponsiveAppBar = () => {
 
 
     useEffect(() => {
-        console.log(user.uid);
-        const currentUser = getUserInfo(user.uid)
-        console.log(currentUser);
+        async function getUser() {
+            console.log(user.uid);
+            const currentUser = await getUserInfo(user.uid)
+            console.log(currentUser);
+        }
+        getUser()
     }, [user])
 
     console.log(userLog);

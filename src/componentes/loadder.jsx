@@ -5,7 +5,7 @@ export default function Loadding() {
     return (
         <>
             <div className="main loadding">
-                <div class="loader">
+                <div className="loader">
                     <span></span>
                 </div>
             </div>
